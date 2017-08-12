@@ -50,29 +50,33 @@ class StudentBookingController extends Controller
 
         if ($model->load(Yii::$app->request->post())){
             $model_person->load(Yii::$app->request->post());
-
-            $body = 'test';
-                       $value = Yii::$app->mailer->compose(
-                       [
-                           'html' => 'form_body'
-                       ],
-                       [
-                            'model' => $model_person,
-                            'logo' => 'reservation2/web/uploads/web_img/logo.jpg',
-                       ])
-                               ->setFrom(['system.riskivector@gmail.com' => 'Incoming student form'])
-                               ->setTo('system.riskivector@gmail.com')
-                               ->setSubject('SYSTEM Student form')
-                               ->send();
-                               
-                       die();
+            
+           
+           
+//                       $value = Yii::$app->mailer->compose(
+//                       [
+//                           'html' => 'form_body'
+//                       ],
+//                       [
+//                            'model' => $model_person,
+//                            'logo' => 'reservation2/web/uploads/web_img/logo.jpg',
+//                       ])
+//                               ->setFrom(['system.riskivector@gmail.com' => 'Incoming student form'])
+//                               ->setTo('system.riskivector@gmail.com')
+//                               ->setSubject('SYSTEM Student form')
+//                               ->send();
+//                               
+                       
             $PhotoName = $model_person->name;
             $model_person->file = UploadedFile::getInstance($model_person,'file');
             $model_person->file->saveAs('uploads/persons_id/'.$PhotoName.'.'.$model_person->file->extension);
             $model_person->photo = 'uploads/persons_id/'.$PhotoName.'.'.$model_person->file->extension;
             
             if($model->validate() || $model_person->validate()){
-                
+                 echo '<pre>';
+            print_r($model);
+            echo '</pre>';
+            die();
                 $flag = $model_person->save();
 
                 if($flag){
